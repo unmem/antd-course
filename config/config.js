@@ -12,8 +12,8 @@ export default {
       path: '/',
       component: '../layout',
       routes: [
-        { path: '/', component: './HelloWorld' },
-        { path: '/helloworld', component: './HelloWorld' },
+        { path: '/', component: 'HelloWorld' },
+        { path: '/helloworld', component: 'HelloWorld' },
         {
           path: '/dashboard',
           routes: [
@@ -22,6 +22,7 @@ export default {
             { path: '/dashboard/workplace', component: 'Dashboard/Workplace' },
           ],
         },
+        { path: '/puzzlecards', component: 'puzzlecards' },
       ],
     },
   ],
