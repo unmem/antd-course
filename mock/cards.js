@@ -27,4 +27,17 @@ export default {
       })
     }, 1000)
   },
+  'post /dev/cards/add': function(req, res, next) {
+    data = [
+      ...data,
+      {
+        ...req.body,
+        id: data[data.length - 1].id + 1,
+      },
+    ]
+
+    res.json({
+      success: true,
+    })
+  },
 }
