@@ -1,9 +1,11 @@
 export default {
+  singular: true, // model and page folder
   plugins: [
     [
       'umi-plugin-react',
       {
         antd: true,
+        dva: true,
       },
     ],
   ],
@@ -26,4 +28,10 @@ export default {
       ],
     },
   ],
+  proxy: {
+    '/dev': {
+      target: 'http://localhost:8081',
+      changeOrigin: true,
+    },
+  },
 }

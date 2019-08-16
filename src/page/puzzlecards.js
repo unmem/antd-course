@@ -1,44 +1,43 @@
 import React, { Component } from 'react'
 import { Card, Button } from 'antd'
+import { connect } from 'dva'
 
-class PuzzleCardsPage extends Component {
-  constructor(props) {
-    super(props)
+const namespace = 'puzzlecards'
 
-    this.counter = 100
-    this.state = {
-      cardList: [
-        {
-          id: 1,
-          setup: 'Did you hear about the two silk worms in a race?',
-          punchline: 'It ended in a tie',
-        },
-        {
-          id: 2,
-          setup: "What happens to a frog's car when it breaks down?",
-          punchline: 'It gets toad away',
-        },
-      ],
-    }
+const getCardList = state => state[namespace].data
+
+const mapStateToProps = state => ({
+  cardList: getCardList(state),
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onClickAdd: newCard => {
+      const action = {
+        type: `${namespace}/addNewCard`,
+        payload: newCard,
+      }
+      dispatch(action)
+    },
+    onDidMount: () => {
+      dispatch({
+        type: `${namespace}/queryInitCards`,
+      })
+    },
   }
+}
 
-  addNewCard = () => {
-    this.setState(prevState => {
-      const card = {
-        id: ++this.counter,
-        setup: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,',
-        punchline:
-          'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      }
-
-      return {
-        cardList: [...prevState.cardList, card],
-      }
-    })
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
+class PuzzleCardsPage extends Component {
+  componentDidMount() {
+    this.props.onDidMount()
   }
 
   render() {
-    const { cardList } = this.state
+    const { cardList, onClickAdd } = this.props
 
     return (
       <div>
@@ -53,7 +52,17 @@ class PuzzleCardsPage extends Component {
           )
         })}
         <div>
-          <Button onClick={this.addNewCard}> Add card </Button>
+          <Button
+            onClick={() =>
+              onClickAdd({
+                setup:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                punchline: 'here we use dva',
+              })
+            }
+          >
+            添加卡片
+          </Button>
         </div>
       </div>
     )
