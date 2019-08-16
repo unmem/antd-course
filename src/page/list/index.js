@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, Modal, Button, Form, Input } from 'antd'
 import { connect } from 'dva'
+import SampleChart from '../../components/SampleChart'
 
 const FormItem = Form.Item
 
@@ -11,10 +12,12 @@ const getCardList = state => state[namespace].cardsList
 // but do NOT need to add `dva-loading` to config.js file, why?
 const getCardsLoading = state =>
   state['loading'].effects[`${namespace}/queryList`]
+const getStatistic = state => state[namespace].statistic
 
 const mapStateToProps = state => ({
   cardsList: getCardList(state),
   cardsLoading: getCardsLoading(state),
+  statistic: getStatistic(state),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -29,23 +32,13 @@ const mapDispatchToProps = dispatch => ({
       payload: values,
     })
   },
+  getStatistic: id => {
+    dispatch({
+      type: 'cards/getStatistic',
+      payload: id,
+    })
+  },
 })
-
-const COLUMNS = [
-  {
-    title: '名称',
-    dataIndex: 'name',
-  },
-  {
-    title: '描述',
-    dataIndex: 'desc',
-  },
-  {
-    title: '链接',
-    dataIndex: 'url',
-    render: value => <a href={value}>{value}</a>,
-  },
-]
 
 @Form.create()
 @connect(
@@ -53,8 +46,35 @@ const COLUMNS = [
   mapDispatchToProps
 )
 class List extends React.Component {
+  COLUMNS = [
+    {
+      title: '名称',
+      dataIndex: 'name',
+    },
+    {
+      title: '描述',
+      dataIndex: 'desc',
+    },
+    {
+      title: '链接',
+      dataIndex: 'url',
+      render: value => <a href={value}>{value}</a>,
+    },
+    {
+      title: '',
+      dataIndex: '',
+      render: (_, { id }) => {
+        return (
+          <Button onClick={() => this.handleStatisticShow(id)}>图表</Button>
+        )
+      },
+    },
+  ]
+
   state = {
     visible: false,
+    statisticVisible: false,
+    id: null,
   }
 
   showModal = () => {
@@ -83,21 +103,35 @@ class List extends React.Component {
     })
   }
 
+  hideSimpleChartModal = () =>
+    this.setState({
+      statisticVisible: false,
+    })
+
+  handleStatisticCancel = () => this.hideSimpleChartModal()
+
+  handleStatisticShow = id => {
+    const { getStatistic } = this.props
+    getStatistic(id)
+    this.setState({ id, statisticVisible: true })
+  }
+
   componentDidMount() {
-    this.props.onDidMount()
+    const { onDidMount } = this.props
+    onDidMount()
   }
 
   render() {
-    const { cardsList, cardsLoading } = this.props
+    const { cardsList, cardsLoading, statistic } = this.props
     const {
       form: { getFieldDecorator },
     } = this.props
-    const { visible } = this.state
+    const { visible, statisticVisible, id } = this.state
 
     return (
       <div>
         <Table
-          columns={COLUMNS}
+          columns={this.COLUMNS}
           dataSource={cardsList}
           loading={cardsLoading}
           rowKey="id"
@@ -124,6 +158,13 @@ class List extends React.Component {
               })(<Input />)}
             </FormItem>
           </Form>
+        </Modal>
+        <Modal
+          visible={statisticVisible}
+          footer={null}
+          onCancel={this.handleStatisticCancel}
+        >
+          <SampleChart data={statistic[id]} />
         </Modal>
       </div>
     )

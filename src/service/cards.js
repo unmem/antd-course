@@ -11,3 +11,7 @@ export function addOne(data) {
     },
   })
 }
+
+export function getStatistic(id) {
+  return axios.get(`/dev/cards/${id}/statistic`)
+}
