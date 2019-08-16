@@ -23,7 +23,7 @@ class BasicLayout extends Component {
             }}
           />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
+            <Menu.Item key="helloworld">
               <Link to="/helloworld">
                 <Icon type="pie-chart" />
                 <span>Helloworld</span>
@@ -38,16 +38,22 @@ class BasicLayout extends Component {
                 </span>
               }
             >
-              <Menu.Item key="2">
+              <Menu.Item key="analysis">
                 <Link to="/dashboard/analysis">分析页</Link>
               </Menu.Item>
-              <Menu.Item key="3">
+              <Menu.Item key="monitor">
                 <Link to="/dashboard/monitor">监控页</Link>
               </Menu.Item>
-              <Menu.Item key="4">
+              <Menu.Item key="workplace">
                 <Link to="/dashboard/workplace">工作台</Link>
               </Menu.Item>
             </SubMenu>
+            <Menu.Item key="list">
+              <Link to="/list">
+                <Icon type="ordered-list" />
+                <span>List</span>
+              </Link>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>

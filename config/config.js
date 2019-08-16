@@ -15,16 +15,17 @@ export default {
       component: '../layout',
       routes: [
         { path: '/', component: 'HelloWorld' },
-        { path: '/helloworld', component: 'HelloWorld' },
+        { path: 'helloworld', component: 'HelloWorld' },
         {
-          path: '/dashboard',
+          path: 'dashboard',
           routes: [
-            { path: '/dashboard/analysis', component: 'Dashboard/Analysis' },
-            { path: '/dashboard/monitor', component: 'Dashboard/Monitor' },
-            { path: '/dashboard/workplace', component: 'Dashboard/Workplace' },
+            { path: 'analysis', component: 'Dashboard/Analysis' },
+            { path: 'monitor', component: 'Dashboard/Monitor' },
+            { path: 'workplace', component: 'Dashboard/Workplace' },
           ],
         },
-        { path: '/puzzlecards', component: 'puzzlecards' },
+        { path: 'puzzlecards', component: 'puzzlecards' },
+        { path: 'list', component: 'list' },
       ],
     },
   ],
