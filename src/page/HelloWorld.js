@@ -1,4 +1,5 @@
 import { Card } from 'antd'
+import { FormattedMessage } from 'umi/locale'
 
 export default () => {
   const style = {
@@ -9,7 +10,10 @@ export default () => {
   }
 
   return (
-    <Card style={style} actions={[<a>Operation A</a>, <a>Operation B</a>]}>
+    <Card
+      style={style}
+      actions={[<FormattedMessage id="helloworld" />, <a>Operation B</a>]}
+    >
       <Card.Meta
         avatar={
           <img

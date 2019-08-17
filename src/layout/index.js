@@ -1,6 +1,7 @@
 import { Component } from 'react'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu, Icon, Button } from 'antd'
 import Link from 'umi/link'
+import { FormattedMessage, getLocale, setLocale } from 'umi/locale'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -9,6 +10,16 @@ const SubMenu = Menu.SubMenu
 class BasicLayout extends Component {
   constructor(props) {
     super(props)
+  }
+
+  changLang() {
+    const locale = getLocale()
+
+    if (!locale || locale === 'zh-CN') {
+      setLocale('en-US')
+    } else {
+      setLocale('zh-CN')
+    }
   }
 
   render() {
@@ -61,6 +72,14 @@ class BasicLayout extends Component {
             style={{ background: '#fff', textAlign: 'center', padding: 0 }}
           >
             Header
+            <Button
+              size="small"
+              onClick={() => {
+                this.changLang()
+              }}
+            >
+              <FormattedMessage id="lang" />
+            </Button>
           </Header>
           <Content style={{ margin: '24px 16px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
