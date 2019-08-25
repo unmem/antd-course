@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Modal, Button, Form, Input } from 'antd'
 import { connect } from 'dva'
-import SampleChart from '../../components/SampleChart'
+import SampleChart from '../../component/SampleChart'
 
 const FormItem = Form.Item
 

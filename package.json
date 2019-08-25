@@ -21,6 +21,9 @@
     "@antv/g2": "^3.5.8-beta.1",
     "antd": "^3.21.4",
     "axios": "^0.19.0",
+    "lodash": "^4.17.15",
+    "lodash-decorators": "^6.0.1",
+    "rc-drawer": "^2.0.6",
     "uuid": "^3.3.2"
   }
 }
